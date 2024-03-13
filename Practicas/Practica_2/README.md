@@ -26,6 +26,8 @@ void delayInit(delay_t *delay, tick_t duration);
 bool_t delayRead(delay_t *delay);
 void delayWrite(delay_t *delay, tick_t duration);
 
+``` 
+
 En main.c se deben ubicar la implementación de todas las funciones.
 
 Consideraciones para la implementación:
