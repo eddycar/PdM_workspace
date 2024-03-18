@@ -1,0 +1,7 @@
+
+#ifndef API_INC_ERROR_HANDLING_H_
+#define API_INC_ERROR_HANDLING_H_
+
+void Error_Handler(void);
+
+#endif /* API_INC_ERROR_HANDLING_H_ */
