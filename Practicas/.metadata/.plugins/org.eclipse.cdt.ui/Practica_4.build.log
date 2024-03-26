@@ -1,0 +1,43 @@
+19:52:42 **** Incremental Build of configuration Debug for project Practica_4 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F439xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4/Drivers/API" -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4/Drivers/API/Inc" -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:43:25: warning: unused variable 'estadoActual' [-Wunused-variable]
+   43 |         debounceState_t estadoActual;
+      |                         ^~~~~~~~~~~~
+../Core/Src/main.c:29:41: warning: unused variable 'delay4' [-Wunused-variable]
+   29 |         delay_t delay1, delay2, delay3, delay4;
+      |                                         ^~~~~~
+../Core/Src/main.c: In function 'debounceFSM_init':
+../Core/Src/main.c:52:9: error: 'estadoActual' undeclared (first use in this function)
+   52 |         estadoActual = BUTTON_UP;
+      |         ^~~~~~~~~~~~
+../Core/Src/main.c:52:9: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:53:20: error: 'delay4' undeclared (first use in this function); did you mean 'delay_t'?
+   53 |         delayInit(&delay4, BOUND_TIME); // 40 segundos
+      |                    ^~~~~~
+      |                    delay_t
+../Core/Src/main.c: In function 'debounceFSM_update':
+../Core/Src/main.c:56:16: error: 'estadoActual' undeclared (first use in this function)
+   56 |         switch(estadoActual){
+      |                ^~~~~~~~~~~~
+../Core/Src/main.c:58:37: error: 'GPIO' undeclared (first use in this function); did you mean 'GPIOH'?
+   58 |                 if(HAL_GPIO_ReadPin(GPIO, GPIO_Pin)){
+      |                                     ^~~~
+      |                                     GPIOH
+../Core/Src/main.c:58:43: error: 'GPIO_Pin' undeclared (first use in this function); did you mean 'GPIO_PinState'?
+   58 |                 if(HAL_GPIO_ReadPin(GPIO, GPIO_Pin)){
+      |                                           ^~~~~~~~
+      |                                           GPIO_PinState
+../Core/Src/main.c:59:36: error: 'delay4' undeclared (first use in this function); did you mean 'delay_t'?
+   59 |                         delayRead(&delay4);
+      |                                    ^~~~~~
+      |                                    delay_t
+../Core/Src/main.c:67:33: warning: implicit declaration of function 'buttonPressed' [-Wimplicit-function-declaration]
+   67 |                                 buttonPressed();
+      |                                 ^~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+19:52:43 Build Failed. 7 errors, 3 warnings. (took 922ms)
+

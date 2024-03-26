@@ -1,0 +1,17 @@
+07:10:41 **** Incremental Build of configuration Debug for project Practica_4P1 ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F439xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4P1/Drivers/API" -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4P1/Drivers/API/Inc" -I"C:/Users/ASUS/Desktop/PdM_workspace/Practicas/Practica_4P1/Drivers/API/Src" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Practica_4P1.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_4P1\STM32F439ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Practica_4P1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Practica_4P1.elf
+ 
+arm-none-eabi-size  Practica_4P1.elf 
+arm-none-eabi-objdump -h -S Practica_4P1.elf  > "Practica_4P1.list"
+   text	   data	    bss	    dec	    hex	filename
+   6672	     20	   1588	   8280	   2058	Practica_4P1.elf
+Finished building: default.size.stdout
+ 
+Finished building: Practica_4P1.list
+ 
+
+07:10:42 Build Finished. 0 errors, 0 warnings. (took 810ms)
+
