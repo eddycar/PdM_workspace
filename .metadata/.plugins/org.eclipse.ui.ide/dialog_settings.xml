@@ -17,6 +17,9 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_5"/>
+			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_2"/>
+			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Referencias\Proyectos de referencia\Ej2_uart"/>
 			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_3"/>
 			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_4P2"/>
 			<item value="C:\Users\ASUS\Desktop\PdM_workspace\Practicas\Practica_4P1"/>

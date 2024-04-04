@@ -1,0 +1,5 @@
+../Core/Src/main.c:21:5:main	2
+../Core/Src/main.c:55:6:buttonPressed	4
+../Core/Src/main.c:73:6:buttonReleased	4
+../Core/Src/main.c:93:6:SystemClock_Config	3
+../Core/Src/main.c:131:13:MX_GPIO_Init	1
