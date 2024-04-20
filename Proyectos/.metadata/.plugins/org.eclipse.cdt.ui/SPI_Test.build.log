@@ -1,0 +1,17 @@
+12:48:29 **** Incremental Build of configuration Debug for project SPI_Test ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/API/src/MAX31865_lib.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F439xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/SPI_Test/Drivers/API" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/SPI_Test/Drivers/API/inc" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/src/MAX31865_lib.d" -MT"Drivers/API/src/MAX31865_lib.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/src/MAX31865_lib.o"
+arm-none-eabi-gcc -o "SPI_Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\SPI_Test\STM32F439ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="SPI_Test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: SPI_Test.elf
+ 
+arm-none-eabi-size  SPI_Test.elf 
+arm-none-eabi-objdump -h -S SPI_Test.elf  > "SPI_Test.list"
+   text	   data	    bss	    dec	    hex	filename
+  28916	    120	   3888	  32924	   809c	SPI_Test.elf
+Finished building: default.size.stdout
+ 
+Finished building: SPI_Test.list
+ 
+
+12:48:31 Build Finished. 0 errors, 0 warnings. (took 1s.907ms)
+

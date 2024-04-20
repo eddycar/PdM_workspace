@@ -1,0 +1,13 @@
+/*
+ * MAX31865_lib.h
+ *
+ *  Created on: Apr 14, 2024
+ *      Author: ASUS
+ */
+
+#ifndef API_INC_MAX31865_LIB_H_
+#define API_INC_MAX31865_LIB_H_
+
+
+
+#endif /* API_INC_MAX31865_LIB_H_ */

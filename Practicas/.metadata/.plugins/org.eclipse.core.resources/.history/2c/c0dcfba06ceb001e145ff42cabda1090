@@ -1,9 +1,0 @@
-
-#ifndef API_INC_API_DEBOUNCE_H_
-#define API_INC_API_DEBOUNCE_H_
-
-void debounceFSM_init(void); //Load the initial state
-void debounceFSM_update(void); // reads the inputs, solves the state transition logic
-//and updates the outputs
-
-#endif /* API_INC_API_DEBOUNCE_H_ */

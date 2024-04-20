@@ -5,7 +5,7 @@ UART_HandleTypeDef UartHandle;
 
 #ifdef __GNUC__
 /* With GCC, small printf (option LD Linker->Libraries->Small printf
-   set to 'Yes') calls __io_putchar() */
+ set to 'Yes') calls __io_putchar() */
 #define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
@@ -35,7 +35,7 @@ bool_t uartInit() {
 	if (HAL_UART_Init(&UartHandle) != HAL_OK) { // handling Error
 		uartErrorHandler();
 		isConnectionSuccesfull = false;
-	}else {
+	} else {
 		printUARTConfiguration(UartHandle); // If the serial conection is successful, print uart configuration
 	}
 	return isConnectionSuccesfull;
@@ -59,29 +59,42 @@ void uartSendStringSize(uint8_t *pstring, uint16_t size) { // Prints String with
 	}
 }
 
-// Function to redirect the standar output to the usart module
-PUTCHAR_PROTOTYPE
-{
-  HAL_UART_Transmit(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+void uartReceiveStringSize(uint8_t *pString, uint16_t size) {
+	HAL_UART_Receive(&UartHandle, pString, size, HAL_MAX_DELAY);
+}
 
-  return ch;
+// Function to redirect the standar output to the usart module
+PUTCHAR_PROTOTYPE {
+	HAL_UART_Transmit(&UartHandle, (uint8_t*) &ch, 1, 0xFFFF);
+
+	return ch;
 }
 
 void printUARTConfiguration(UART_HandleTypeDef UartHandle) {
 	// print configuration parameters through serial terminal
-    printf("\rConfiguracion del UART:\n");
-    printf("\rBaudRate: %lu\n", UartHandle.Init.BaudRate);
-    printf("\rWordLength: %d bits\n", (UartHandle.Init.WordLength == UART_WORDLENGTH_8B) ? 8 : 9);
-    printf("\rStopBits: %s\n", (UartHandle.Init.StopBits == UART_STOPBITS_1) ? "1 bit" : "2 bits");
-    printf("\rParity: %s\n", (UartHandle.Init.Parity == UART_PARITY_NONE) ? "Ninguno" : (UartHandle.Init.Parity == UART_PARITY_EVEN) ? "Par" : "Impar");
-    printf("\rControl de flujo: %s\n", (UartHandle.Init.HwFlowCtl == UART_HWCONTROL_NONE) ? "Deshabilitado" : "Habilitado");
-    printf("\rModo: %s\n", (UartHandle.Init.Mode == UART_MODE_TX) ? "Transmision" : (UartHandle.Init.Mode == UART_MODE_RX) ? "Recepcion" : "Transmision y Recepcion");
-    printf("\rOversampling: %d\n", (UartHandle.Init.OverSampling == UART_OVERSAMPLING_16) ? 16 : 8);
+	printf("\rConfiguracion del UART:\n");
+	printf("\rBaudRate: %lu\n", UartHandle.Init.BaudRate);
+	printf("\rWordLength: %d bits\n",
+			(UartHandle.Init.WordLength == UART_WORDLENGTH_8B) ? 8 : 9);
+	printf("\rStopBits: %s\n",
+			(UartHandle.Init.StopBits == UART_STOPBITS_1) ? "1 bit" : "2 bits");
+	printf("\rParity: %s\n",
+			(UartHandle.Init.Parity == UART_PARITY_NONE) ? "Ninguno" :
+			(UartHandle.Init.Parity == UART_PARITY_EVEN) ? "Par" : "Impar");
+	printf("\rControl de flujo: %s\n",
+			(UartHandle.Init.HwFlowCtl == UART_HWCONTROL_NONE) ?
+					"Deshabilitado" : "Habilitado");
+	printf("\rModo: %s\n",
+			(UartHandle.Init.Mode == UART_MODE_TX) ? "Transmision" :
+			(UartHandle.Init.Mode == UART_MODE_RX) ?
+					"Recepcion" : "Transmision y Recepcion");
+	printf("\rOversampling: %d\n",
+			(UartHandle.Init.OverSampling == UART_OVERSAMPLING_16) ? 16 : 8);
 }
 
 static void uartErrorHandler() {
 	/* Turn LED3 on */
-	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET );
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
 	while (1) {
 	}
 }

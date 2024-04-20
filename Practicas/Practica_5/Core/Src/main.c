@@ -5,6 +5,8 @@
 #include "API_uart.h"
 #include "error_handling.h"
 
+#define MAX_STRING_LENGTH 1
+
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 
@@ -40,14 +42,20 @@ int main(void) {
 	// Initialize UART module
 	uartInit();
 
+	uint8_t receivedString[MAX_STRING_LENGTH]; //Create a buffer to store the received String
+	uint16_t stringLength = MAX_STRING_LENGTH; // Size of the data string to receive
+
 	while (1) {
+		uartReceiveStringSize(receivedString, stringLength);
+		HAL_Delay(1000);
+		uartSendString(receivedString);
 		//update debounce module state
 		debounceFSM_update();
 
 		if (readKey()) {
-			buttonPressed(); // LEDs sequence 1
+			//buttonPressed(); // LEDs sequence 1
 		} else {
-			buttonReleased(); // LEDs sequence 2
+			//buttonReleased(); // LEDs sequence 2
 		}
 	}
 }

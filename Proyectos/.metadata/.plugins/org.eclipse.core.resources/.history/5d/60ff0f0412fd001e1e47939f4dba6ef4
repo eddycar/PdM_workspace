@@ -1,0 +1,21 @@
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "config.h"
+#include "UART.h"
+#include "MAX31865_lib.h"
+
+int main(void) {
+
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
+
+	/* Initialize peripherals */
+
+
+	/* Infinite loop */
+	while (1) {
+
+
+
+	}
+}

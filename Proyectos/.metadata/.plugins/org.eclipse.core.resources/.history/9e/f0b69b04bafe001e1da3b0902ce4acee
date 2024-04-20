@@ -1,0 +1,87 @@
+#include <FINITE_STATE_MACHINE.h>
+#include "error_handler.h"
+#include "config.h"
+#include "UART.h"
+#include "SPI.h"
+#include "MAX31865_lib.h"
+#include "API_debounce.h"
+
+#define TX_MAX_STRING_LENGTH 150
+#define RX_MAX_STRING_LENGTH 1
+#define NUM_WIRES 3
+
+static SystemState_t currentState;
+static char buffer_tx[TX_MAX_STRING_LENGTH];
+static bool_t trigger = false;
+static char buffer_rx[RX_MAX_STRING_LENGTH];
+static uint16_t stringLength = RX_MAX_STRING_LENGTH;
+
+int temperatura = 0;
+
+void SystemFSM_init(void) {
+	currentState = STATE_CONFIG;
+}
+
+void SystemFSM_update(void) {
+	switch (currentState) {
+	case STATE_CONFIG: /* Initialize peripherals */
+		SystemClock_Config();
+		GPIO_Init();
+		uartInit();
+		debounceFSM_init();
+		SPI1_Init();
+		MAX31865_Init(NUM_WIRES);
+		if (read_error_flag() == true) {
+			currentState = STATE_FAILURE;
+		} else {
+			currentState = STATE_IDLE;
+		}
+		break;
+	case STATE_FAILURE:
+		//funcion para manejar el error
+		Error_Handler();
+		currentState = STATE_CONFIG;
+		break;
+	case STATE_IDLE:
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // Read User Button state
+			trigger = true;
+			currentState = STATE_DATA_ADQUISITION;
+		}
+		break;
+	case STATE_DATA_ADQUISITION:
+		temperatura++;
+		sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n", temperatura, trigger);
+		HAL_Delay(500);
+		currentState = STATE_DATA_SENDING;
+		break;
+	case STATE_DATA_SENDING:
+		//Enviar datos
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // Read User Button state
+			trigger = false;
+			sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n", temperatura,
+					trigger);
+			uartSendString((uint8_t*) buffer_tx);
+			currentState = STATE_DATA_STORAGE;
+		} else {
+			uartSendString((uint8_t*) buffer_tx);
+			HAL_Delay(500);
+			currentState = STATE_DATA_ADQUISITION;
+		}
+		break;
+	case STATE_DATA_STORAGE:
+		//esperar bandera
+		uartReceiveStringSize((uint8_t *)buffer_rx, stringLength);
+		if (buffer_rx[0] == 'T') {
+			currentState = STATE_IDLE;
+			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+			HAL_Delay(2000);
+			HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+
+		}
+
+		break;
+	default:
+		//Manejar cualquier otro caso no especificado
+	}
+}
+

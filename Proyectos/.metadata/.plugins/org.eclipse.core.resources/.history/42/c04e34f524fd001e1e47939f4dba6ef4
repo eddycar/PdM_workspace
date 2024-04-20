@@ -1,0 +1,8 @@
+#ifndef API_INC_SPI_H_
+#define API_INC_SPI_H_
+
+ void SPI1_Init(void);
+
+
+
+#endif /* API_INC_SPI_H_ */

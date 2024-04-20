@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;MAX31865_lib.c, UART.c&apos; to &apos;src&apos;" description="Move 2 resources to &apos;src&apos;" destination="Drivers/API/src" element1="Drivers/API/MAX31865_lib.c" element2="Drivers/API/UART.c" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="2" stamp="1713293484096" updateReferences="true"/>
+</session>

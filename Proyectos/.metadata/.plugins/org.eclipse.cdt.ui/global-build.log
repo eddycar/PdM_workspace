@@ -1,0 +1,14 @@
+17:11:35 **** Incremental Build of configuration Debug for project DAQ_Temp ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/API/Src/FINITE_STATE_MACHINE.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F439xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/API" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/API/Inc" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/STM32F4xx_HAL_Driver" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/STM32F4xx_HAL_Driver/Src" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/STM32F4xx_HAL_Driver/Inc" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Src" -I"C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc" -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/API/Src/FINITE_STATE_MACHINE.d" -MT"Drivers/API/Src/FINITE_STATE_MACHINE.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/API/Src/FINITE_STATE_MACHINE.o"
+arm-none-eabi-gcc -o "DAQ_Temp.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\Trabajo_Practico_Final\DAQ_Temp\STM32F439ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAQ_Temp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: DAQ_Temp.elf
+ 
+arm-none-eabi-size  DAQ_Temp.elf 
+arm-none-eabi-objdump -h -S DAQ_Temp.elf  > "DAQ_Temp.list"
+   text	   data	    bss	    dec	    hex	filename
+  26196	    128	   2256	  28580	   6fa4	DAQ_Temp.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAQ_Temp.list
+ 

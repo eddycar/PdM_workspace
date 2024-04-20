@@ -1,0 +1,80 @@
+#include <FINITE_STATE_MACHINE.h>
+#include "error_handler.h"
+#include "config.h"
+#include "UART.h"
+#include "SPI.h"
+#include "MAX31865_lib.h"
+#include "API_debounce.h"
+
+#define TX_MAX_STRING_LENGTH 150
+#define RX_MAX_STRING_LENGTH 1
+#define NUM_WIRES 3
+
+static SystemState_t currentState;
+static char buffer_tx[TX_MAX_STRING_LENGTH];
+static bool_t trigger = false;
+static char buffer_rx[RX_MAX_STRING_LENGTH];
+static uint16_t stringLength = RX_MAX_STRING_LENGTH;
+
+float PT100_Temperature = 0.0f;
+
+void SystemFSM_init(void) {
+	currentState = STATE_CONFIG;
+}
+
+void SystemFSM_update(void) {
+	switch (currentState) {
+	case STATE_CONFIG: /* Initialize peripherals */
+		SystemClock_Config();
+		GPIO_Init();
+		uartInit();
+		debounceFSM_init();
+		SPI1_Init();
+		MAX31865_Init(NUM_WIRES);
+		if (read_error_flag() == true) {
+			currentState = STATE_FAILURE;
+		} else {
+			currentState = STATE_IDLE;
+		}
+		break;
+	case STATE_FAILURE:
+		Error_Handler();
+		currentState = STATE_CONFIG;
+		break;
+	case STATE_IDLE:
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // Read User Button state
+			trigger = true;
+			sprintf(buffer_tx, "\rTrigger: %d\n", trigger);
+			uartSendString((uint8_t*) buffer_tx);
+			currentState = STATE_DATA_ADQUISITION;
+		}
+		break;
+	case STATE_DATA_ADQUISITION:
+		PT100_Temperature = MAX31865_Get_Temperature();
+		sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n", (uint8_t)PT100_Temperature,trigger);
+		currentState = STATE_DATA_SENDING;
+		break;
+	case STATE_DATA_SENDING:
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // Read User Button state
+			printf("\rData_SEnding\n");
+			trigger = false;
+			uartSendString((uint8_t*) buffer_tx);
+			currentState = STATE_DATA_STORAGE;
+		}
+//		else {
+//			uartSendString((uint8_t*) buffer_tx);
+//			HAL_Delay(500);
+//			//currentState = STATE_DATA_ADQUISITION;
+//		}
+		break;
+	case STATE_DATA_STORAGE:
+		/*uartReceiveStringSize((uint8_t *)buffer_rx, stringLength);
+		if (buffer_rx[0] == 'T') {
+			currentState = STATE_IDLE;
+		}*/
+		break;
+	default:
+		printf("\rError Inesperado!\n");
+	}
+}
+

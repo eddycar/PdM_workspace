@@ -1,0 +1,46 @@
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "config.h"
+#include "UART.h"
+#include "MAX31865_lib.h"
+
+#define MAX_STRING_LENGTH 20
+
+static void floatToString(float value, char *buffer, int bufferSize);
+
+static float PT100_Temperature = 0.0f;
+static uint8_t roundedTemperature = 0;
+static uint8_t buffer[MAX_STRING_LENGTH];
+static int16_t stringLength = MAX_STRING_LENGTH; // Size of the data string to receive
+
+static uint8_t hello[] = {'\r','H', 'O', 'L', 'A', '\n'};
+
+int main(void) {
+
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
+
+	/* Initialize peripherals */
+	uartInit();
+	MX_SPI1_Init();
+	MAX31865_Init(3);
+
+	/* Configure the system clock */
+	SystemClock_Config();
+
+	/* Initialize all configured peripherals */
+	MX_GPIO_Init();
+	MX_USART3_UART_Init();
+
+	/* Infinite loop */
+	while (1) {
+		//PT100_Temperature = MAX31865_Get_Temperature();
+		/*floatToString(PT100_Temperature, (char*)buffer, sizeof(buffer));*/
+		uartSendString(hello);
+		HAL_Delay(500);
+	}
+}
+
+void floatToString(float value, char *buffer, int bufferSize) {
+    snprintf(buffer, bufferSize, "%d", (int)value); // Formatea el float con dos decimales y lo guarda en el buffer
+}

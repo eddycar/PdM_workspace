@@ -1,0 +1,2 @@
+../Drivers/Utilities/Src/config.c:8:6:SystemClock_Config	88	static
+../Drivers/Utilities/Src/config.c:51:6:GPIO_Init	48	static

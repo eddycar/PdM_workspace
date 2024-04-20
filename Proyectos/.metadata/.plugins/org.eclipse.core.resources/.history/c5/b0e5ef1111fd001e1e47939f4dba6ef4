@@ -1,0 +1,23 @@
+#include "error_handler.h"
+/*
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
+
+static bool_t handle_error_flag;
+
+bool_t read_error_flag(void) {
+	return handle_error_flag;
+}
+void write_error_flag(bool_t value) {
+	handle_error_flag = value;
+}
+
+void Error_Handler(void) {
+	__disable_irq();
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+	HAL_Delay(500);
+	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_RESET);
+	__enable_irq();
+	handle_error_flag = false;
+}

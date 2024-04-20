@@ -1,0 +1,10 @@
+#ifndef API_INC_SPI_H_
+#define API_INC_SPI_H_
+
+#include "typedefs.h"
+
+void SPI1_Init(void);
+void SPI_Transmit(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size,uint32_t Timeout);
+void SPI_Receive(SPI_HandleTypeDef *hspi, uint8_t *pData, uint16_t Size, uint32_t Timeout);
+
+#endif /* API_INC_SPI_H_ */

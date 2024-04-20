@@ -1,0 +1,2 @@
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:34:6:SystemFSM_init	4	static
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:39:6:SystemFSM_update	16	static
