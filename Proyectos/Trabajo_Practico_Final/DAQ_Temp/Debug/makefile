@@ -62,8 +62,8 @@ all: main-build
 main-build: DAQ_Temp.elf secondary-outputs
 
 # Tool invocations
-DAQ_Temp.elf DAQ_Temp.map: $(OBJS) $(USER_OBJS) C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\Trabajo_Practico_Final\DAQ_Temp\STM32F439ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "DAQ_Temp.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\Trabajo_Practico_Final\DAQ_Temp\STM32F439ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAQ_Temp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+DAQ_Temp.elf DAQ_Temp.map: $(OBJS) $(USER_OBJS) C:\Users\ASUS\Desktop\Trabajo_Practico_Final\DAQ_Temp\STM32F439ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "DAQ_Temp.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\ASUS\Desktop\Trabajo_Practico_Final\DAQ_Temp\STM32F439ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAQ_Temp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

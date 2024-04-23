@@ -1,0 +1,165 @@
+#include "MAX31865_lib.h"
+#include "SPI.h"
+#include "error_handler.h"
+
+// The 'nominal' 0-degrees-C resistance of the sensor 100.0 for PT100, 1000.0 for PT1000
+#define MAX31865_PT100_R0 (double)100.0
+
+// The value of the Rref resistor. Use 428.5 for PT100 and 4285.0 for PT1000
+#define MAX31865_Rref (double)428.5
+
+// Error Status, false if there is no error, true if there is any error
+static bool_t MAX31865_Sensor_Error = false;
+
+// Output in low state: GND
+void cs_set();
+
+// Output in high state: VDD
+void cs_reset();
+
+extern SPI_HandleTypeDef hspi1;
+
+// Module configuration and initialization:
+// | D7 -> VBIAS | D6 -> Conversion Mode | D5 -> 1-Shot | D4 -> Num. Wires
+// | D3, D2 -> Fault detection | D1 -> Fault Status Clear | D0 -> 50/60 Hz Filter
+void MAX31865_Init(uint8_t num_wires) {
+	// Module reset counter
+	uint8_t MAX31865_Reinitialization_cnt = 0;
+
+	// index 1 contains the memory address of the configuration register
+	// index 2 contains the value with which the configuration register will be loaded
+	uint8_t MAX31865ConfigurationRegisterWrite[] = { 0x80, 0x00 };
+
+	// RTD configuration according to the number of threads
+	if (num_wires == 2 || num_wires == 4) {
+		MAX31865ConfigurationRegisterWrite[1] = 0xC2;
+	} else if (num_wires == 3) {
+		MAX31865ConfigurationRegisterWrite[1] = 0xD2;
+	}
+
+	// Send configuration bytes to max31865
+	cs_set();
+	SPI_Transmit(&hspi1, MAX31865ConfigurationRegisterWrite, 2, 100);
+	cs_reset();
+
+	if (MAX31865_Configuration_info() == 0xD0) {
+		printf("\rInitialization MAX31865 OK\r\n");
+	} else {
+		while (MAX31865_Configuration_info() != 0xD0) {
+			MAX31865_Reinitialization_cnt++;
+			cs_set();
+			SPI_Transmit(&hspi1, MAX31865ConfigurationRegisterWrite, 2, 100);
+			cs_reset();
+
+			// read the configuration log to verify that the data was loaded correctly
+			if (MAX31865_Configuration_info() == 0xD0) {
+				printf("\rInitialization MAX31865 OK\r\n");
+				break;
+			} else if (MAX31865_Reinitialization_cnt == 10) { //If the initialization is not successful in 100 attempts, the error flag is set.
+				write_error_flag(true);
+				printf("\rInitialization MAX31865 failed\r\n");
+				break;
+			}
+		}
+	}
+}
+
+// Get max31865 configuration info
+uint8_t MAX31865_Configuration_info(void) {
+	uint8_t readData = 0x00;
+	uint8_t MAX31865_Configuration = 0x00;
+	cs_set(); //
+	SPI_Transmit(&hspi1, &readData, 1, 100);
+	HAL_SPI_Receive(&hspi1, &MAX31865_Configuration, 1, 100); // read configuration log
+	SPI_Receive(&hspi1, &MAX31865_Configuration, 1, 100);
+	cs_reset();
+	return MAX31865_Configuration;
+}
+
+// Get Temperature
+double MAX31865_Get_Temperature(void) {
+	double data;
+
+	// It is loaded with the information obtained from the reading of the max31865
+	struct rx_data_MAX31865 {
+		uint16_t RTD_Resistance_Registers;
+		uint16_t High_Fault_Threshold;
+		uint16_t Low_Fault_Threshold;
+		uint8_t Fault_Status;
+	};
+
+	struct rx_data_MAX31865 MAX31865_receieve_data;
+
+	// address of the register from which the data
+	uint8_t MAX31865_start_address_of_the_poll = 0x01;
+	uint8_t MAX31865_rx_buffer[7];
+
+	cs_set();
+	SPI_Transmit(&hspi1, &MAX31865_start_address_of_the_poll, 1, 100);
+	SPI_Receive(&hspi1, MAX31865_rx_buffer, 7, 100);
+	cs_reset();
+
+	// assigns information to each regiter in the structure
+	MAX31865_receieve_data.RTD_Resistance_Registers = ((MAX31865_rx_buffer[0]
+			<< 8) | MAX31865_rx_buffer[1]) >> 1;
+	MAX31865_receieve_data.High_Fault_Threshold = ((MAX31865_rx_buffer[2] << 8)
+			| MAX31865_rx_buffer[3]) >> 1;
+	MAX31865_receieve_data.Low_Fault_Threshold = (MAX31865_rx_buffer[4] << 8)
+			| MAX31865_rx_buffer[5];
+	MAX31865_receieve_data.Fault_Status = MAX31865_rx_buffer[6];
+
+	// error handling
+	if (MAX31865_receieve_data.Fault_Status > 0x00) {
+
+		MAX31865_Sensor_Error = true;
+		printf("\rSensor Error!\r\n");
+
+		/*----Automatic error reset ----*/
+		// Module is reset
+		MAX31865_Init(3);
+		MAX31865_Sensor_Error = false;
+	}
+
+	// convert ADC values to resistance
+	data = ((double) MAX31865_receieve_data.RTD_Resistance_Registers
+			* MAX31865_Rref ) / (double) 32768.0; // ADC resolution 15 bits
+	//printf("\rRrtd = %d\n", (int) data);
+
+	// converts and returns temperature values
+	return MAX31865_Get_Temperature_math(data);
+}
+
+// Conversion of resistance to temperature
+double MAX31865_Get_Temperature_math(double PT100_Resistance) {
+	double MAX31865_PT100_T = 0.0;
+
+	//If the resistance is high (greater than or equal to 100 ohms) use:
+	if (PT100_Resistance >= (double) 100.0) {
+		double MAX31865_math_Discriminant = (double) 0.00001527480889
+				- ((double) -0.00000231
+						* (1 - (PT100_Resistance / MAX31865_PT100_R0 )));
+		MAX31865_PT100_T = ((double) -0.0039083
+				+ sqrt(MAX31865_math_Discriminant)) / (double) -0.000001155;
+		// If the resistance is low (less than 100 ohms), another polynomial formula is used to calculate the temperature.
+		// fifth degree polynomial approximation
+	} else {
+		MAX31865_PT100_T = (double) 0.000000000270 * pow(PT100_Resistance, 5)
+				- (double) 0.000000066245 * pow(PT100_Resistance, 4)
+				- (double) 0.000000184636 * pow(PT100_Resistance, 3)
+				+ (double) 0.002320232987 * pow(PT100_Resistance, 2)
+				+ (double) 2.229927824035 * PT100_Resistance
+				- (double) 242.090854986215;
+	}
+	return MAX31865_PT100_T;
+}
+
+// CS GND
+void cs_set() {
+	HAL_GPIO_WritePin(GPIOA, CS_Pin, GPIO_PIN_RESET);
+}
+
+// CS VDD
+void cs_reset() {
+	HAL_GPIO_WritePin(GPIOA, CS_Pin, GPIO_PIN_SET);
+}
+

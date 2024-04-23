@@ -5,6 +5,7 @@
 #include "SPI.h"
 #include "MAX31865_lib.h"
 #include "API_debounce.h"
+#include "API_delay.h"
 
 // Max TX buffer length
 #define TX_MAX_STRING_LENGTH 150
@@ -21,17 +22,29 @@ static char buffer_tx[TX_MAX_STRING_LENGTH];
 
 // Buffer RX
 static char buffer_rx[RX_MAX_STRING_LENGTH];
+
 // String Length RX
 static uint16_t stringLength = RX_MAX_STRING_LENGTH;
+
+// saves the temperature value obtained from the conversion
+static float PT100Temperature = 0.0f;
 
 // Trigger Start Data Acquisition
 static bool_t trigger = false;
 
+// delays before data acquisition and sending
+static delay_t delayDAQ;
+static delay_t delaySend;
 
-float PT100_Temperature = 0.0f;
+void configPeripheral(void);
+void data_sending(void);
 
 // initialize FSM
 void SystemFSM_init(void) {
+	delayInit(&delayDAQ, 500);
+	delayInit(&delaySend, 500);
+
+	debounceFSM_init();
 	currentState = STATE_CONFIG;
 }
 
@@ -39,12 +52,7 @@ void SystemFSM_init(void) {
 void SystemFSM_update(void) {
 	switch (currentState) {
 	case STATE_CONFIG: /* Initialize peripherals */
-		SystemClock_Config();
-		GPIO_Init();
-		uartInit();
-		debounceFSM_init();
-		SPI1_Init();
-		MAX31865_Init(NUM_WIRES);
+		configPeripheral();
 		if (read_error_flag() == true) { //  errors?
 			currentState = STATE_FAILURE;
 		} else {
@@ -58,7 +66,8 @@ void SystemFSM_update(void) {
 		break;
 
 	case STATE_IDLE:
-		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // If button is pressed App To Start Recording
+		debounceFSM_update();
+		if (readKey()) { // If button is pressed App To Start Recording
 			trigger = true;
 			sprintf(buffer_tx, "\rTrigger: %d\n", trigger);
 			uartSendString((uint8_t*) buffer_tx);
@@ -67,26 +76,20 @@ void SystemFSM_update(void) {
 		break;
 
 	case STATE_DATA_ADQUISITION: // Get Temperature y Save in buffer
-		PT100_Temperature = MAX31865_Get_Temperature();
-		sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n", (uint8_t)PT100_Temperature,trigger);
+		PT100Temperature = MAX31865GetTemperature();
+		sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n",
+				(uint8_t) PT100Temperature, trigger);
+		delayRead(&delaySend);
 		currentState = STATE_DATA_SENDING;
 		break;
 
 	case STATE_DATA_SENDING:
-		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // If Button is pressed  App To Stop Recording
-			trigger = false;
-			uartSendString((uint8_t*) buffer_tx);
-			currentState = STATE_DATA_STORAGE;
-		}
-		else {
-			uartSendString((uint8_t*) buffer_tx); // Send Temperature Data to App
-			HAL_Delay(500);
-			currentState = STATE_DATA_ADQUISITION;
-		}
+		uartSendString((uint8_t*) buffer_tx);
+		data_sending();
 		break;
 
 	case STATE_DATA_STORAGE: // Saves Data and waita for flag to change to IDLE State
-		uartReceiveStringSize((uint8_t *)buffer_rx, stringLength);
+		uartReceiveStringSize((uint8_t*) buffer_rx, stringLength);
 		if (buffer_rx[0] == 'T') {
 			currentState = STATE_IDLE;
 		}
@@ -97,3 +100,25 @@ void SystemFSM_update(void) {
 	}
 }
 
+void configPeripheral(void) {
+	SystemClock_Config();
+	GPIO_Init();
+	uartInit();
+	debounceFSM_init();
+	SPI1_Init();
+	MAX31865Init(NUM_WIRES);
+}
+
+void data_sending(void) {
+	delayInit(&delayDAQ, 500);
+	debounceFSM_update();
+	if (readKey()) { // If Button is pressed  App To Stop Recording
+		trigger = false;
+		sprintf(buffer_tx, "\rTrigger: %d\n", trigger);
+		uartSendString((uint8_t*) buffer_tx);
+		currentState = STATE_DATA_STORAGE;
+	} else {
+		delayRead(&delayDAQ);
+		currentState = STATE_DATA_ADQUISITION;
+	}
+}

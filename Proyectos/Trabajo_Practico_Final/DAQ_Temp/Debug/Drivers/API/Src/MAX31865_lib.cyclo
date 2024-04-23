@@ -1,6 +1,6 @@
-../Drivers/API/Src/MAX31865_lib.c:17:6:MAX31865_Init	5
-../Drivers/API/Src/MAX31865_lib.c:41:9:MAX31865_Configuration_info	1
-../Drivers/API/Src/MAX31865_lib.c:52:8:MAX31865_Get_Temperature	2
-../Drivers/API/Src/MAX31865_lib.c:103:8:MAX31865_Get_Temperature_math	2
-../Drivers/API/Src/MAX31865_lib.c:126:6:cs_set	1
-../Drivers/API/Src/MAX31865_lib.c:131:6:cs_reset	1
+../Drivers/API/Src/MAX31865_lib.c:25:6:MAX31865Init	8
+../Drivers/API/Src/MAX31865_lib.c:68:9:MAX31865ConfigurationInfo	1
+../Drivers/API/Src/MAX31865_lib.c:80:8:MAX31865GetTemperature	2
+../Drivers/API/Src/MAX31865_lib.c:133:8:MAX31865GetTemperatureMath	2
+../Drivers/API/Src/MAX31865_lib.c:157:6:CSSet	1
+../Drivers/API/Src/MAX31865_lib.c:162:6:CSReset	1

@@ -1,0 +1,63 @@
+!SESSION 2024-04-22 10:04:54.820 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\ASUS\Desktop\Trabajo_Practico_Final
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-22 10:05:02.768
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-22 10:05:02.789
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\Trabajo_Practico_Final\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-22 10:05:06.970
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-04-22 10:05:37.718
+!MESSAGE Indexed 'DAQ_Temp' (32 sources, 132 headers) in 6.33 sec: 13,344 declarations; 52,076 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.37%)
+!SESSION 2024-04-22 10:21:53.318 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\ASUS\Desktop\Trabajo_Practico_Final
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-22 10:21:58.113
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-22 10:21:58.114
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\Trabajo_Practico_Final\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-22 10:22:03.481
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-22 13:56:19.257 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-22 13:56:23.163
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-22 13:56:23.164
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\Trabajo_Practico_Final\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-22 13:56:28.561
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-23 04:16:40.437 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-23 04:16:44.518
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-23 04:16:44.520
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\Trabajo_Practico_Final\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-23 04:16:49.310
+!MESSAGE Started RMI Server, listening on port 41337

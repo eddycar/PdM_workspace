@@ -1,0 +1,119 @@
+#include <FINITE_STATE_MACHINE.h>
+#include "error_handler.h"
+#include "config.h"
+#include "UART.h"
+#include "SPI.h"
+#include "MAX31865_lib.h"
+#include "API_debounce.h"
+#include "API_delay.h"
+
+// Max TX buffer length
+#define TX_MAX_STRING_LENGTH 150
+// Max RX buffer length
+#define RX_MAX_STRING_LENGTH 1
+// Sensor wires
+#define NUM_WIRES 3
+
+// Current State Variable
+static SystemState_t currentState;
+
+// Buffer TX
+static char buffer_tx[TX_MAX_STRING_LENGTH];
+
+// Buffer RX
+static char buffer_rx[RX_MAX_STRING_LENGTH];
+
+// String Length RX
+static uint16_t stringLength = RX_MAX_STRING_LENGTH;
+
+// saves the temperature value obtained from the conversion
+static float PT100Temperature = 0.0f;
+
+// Trigger Start Data Acquisition
+static bool_t trigger = false;
+
+// delay between data acquisition and sending
+static delay_t delayDAQ;
+
+void configPeripheral(void);
+void data_sending(void);
+
+
+// initialize FSM
+void SystemFSM_init(void) {
+	currentState = STATE_CONFIG;
+}
+
+
+
+// state transition function
+void SystemFSM_update(void) {
+	switch (currentState) {
+	case STATE_CONFIG: /* Initialize peripherals */
+		configPeripheral();
+		if (read_error_flag() == true) { //  errors?
+			currentState = STATE_FAILURE;
+		} else {
+			currentState = STATE_IDLE;
+		}
+		break;
+
+	case STATE_FAILURE:   //Handle Errors
+		Error_Handler();
+		currentState = STATE_CONFIG;
+		break;
+
+	case STATE_IDLE:
+		if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // If button is pressed App To Start Recording
+			trigger = true;
+			sprintf(buffer_tx, "\rTrigger: %d\n", trigger);
+			uartSendString((uint8_t*) buffer_tx);
+			currentState = STATE_DATA_ADQUISITION;
+		}
+		break;
+
+	case STATE_DATA_ADQUISITION: // Get Temperature y Save in buffer
+		PT100Temperature = MAX31865_Get_Temperature();
+		sprintf(buffer_tx, "\rTemp: %d Trigger: %d\n",
+				(uint8_t) PT100Temperature, trigger);
+		HAL_Delay(500);
+		currentState = STATE_DATA_SENDING;
+		break;
+
+	case STATE_DATA_SENDING:
+		uartSendString((uint8_t*) buffer_tx);
+		data_sending();
+		break;
+
+	case STATE_DATA_STORAGE: // Saves Data and waita for flag to change to IDLE State
+		uartReceiveStringSize((uint8_t*) buffer_rx, stringLength);
+		if (buffer_rx[0] == 'T') {
+			currentState = STATE_IDLE;
+		}
+		break;
+
+	default:
+		printf("\rError Inesperado!\n");
+	}
+}
+
+void configPeripheral(void) {
+	SystemClock_Config();
+	GPIO_Init();
+	uartInit();
+	debounceFSM_init();
+	SPI1_Init();
+	MAX31865_Init(NUM_WIRES);
+}
+
+void data_sending(void) {
+	if (HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13) == GPIO_PIN_SET) { // If Button is pressed  App To Stop Recording
+		trigger = false;
+		sprintf(buffer_tx, "\rTrigger: %d\n", trigger);
+		uartSendString((uint8_t*) buffer_tx);
+		currentState = STATE_DATA_STORAGE;
+	} else {
+		HAL_Delay(500);
+		currentState = STATE_DATA_ADQUISITION;
+	}
+}

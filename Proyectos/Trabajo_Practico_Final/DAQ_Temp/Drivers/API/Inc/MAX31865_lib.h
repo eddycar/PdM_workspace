@@ -4,13 +4,12 @@
 #include <main.h>
 #include <math.h>
 #include <stdio.h>
-#include <stdbool.h>
 
 #define CS_Pin GPIO_PIN_4 // Chip Select
 
-void MAX31865_Init(uint8_t num_wires); // Initialize The Max31865 Module
-uint8_t MAX31865_Configuration_info(void); // Get max31865 configuration info
-double MAX31865_Get_Temperature(void); // Get Temperature
-double MAX31865_Get_Temperature_math(double PT100_Resistance); // Conversion of resistance to temperature
+void MAX31865Init(uint8_t num_wires); // Initialize The Max31865 Module
+uint8_t MAX31865ConfigurationInfo(void); // Get max31865 configuration info
+double MAX31865GetTemperature(void); // Get Temperature
+double MAX31865GetTemperatureMath(double PT100_Resistance); // Conversion of resistance to temperature
 
 #endif /* API_INC_MAX31865_LIB_H_ */

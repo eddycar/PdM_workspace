@@ -1,0 +1,10 @@
+06:14:31 **** Incremental Build of configuration Debug for project DAQ_Temp ****
+make -j8 all 
+arm-none-eabi-size  DAQ_Temp.elf 
+   text	   data	    bss	    dec	    hex	filename
+  26884	    128	   2280	  29292	   726c	DAQ_Temp.elf
+Finished building: default.size.stdout
+ 
+
+06:14:31 Build Finished. 0 errors, 0 warnings. (took 350ms)
+

@@ -6,6 +6,7 @@
 // The value of the Rref resistor. Use 428.5 for PT100 and 4285.0 for PT1000
 #define MAX31865_Rref (double)428.5
 
+
 bool MAX31865_Sensor_Error = 0; // Error Status
 
 void cs_set();

@@ -4905,3 +4905,78 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-20 12:04:55.032
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-21 17:49:37.003 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-21 17:49:51.674
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-21 17:49:51.682
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-21 17:50:00.421
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-21 19:37:51.070 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-21 19:37:54.677
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-21 19:37:54.678
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-21 19:37:59.643
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-21 20:57:47.267 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-21 20:57:50.894
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-21 20:57:50.896
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-21 20:57:56.306
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-22 10:00:51.013 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\ASUS\Desktop\PdM_workspace\Proyectos
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-22 10:01:05.862
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-22 10:01:05.870
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-22 10:01:15.860
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2024-04-22 10:21:06.464 -----------------------------------------------
+eclipse.buildId=Version 1.15.0
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_CO
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -data C:\Users\ASUS\Desktop\PdM_workspace\Proyectos
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-04-22 10:21:11.498
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-04-22 10:21:11.499
+!MESSAGE Log4j2 initialized with config file C:\Users\ASUS\Desktop\PdM_workspace\Proyectos\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-04-22 10:21:17.663
+!MESSAGE Started RMI Server, listening on port 41337

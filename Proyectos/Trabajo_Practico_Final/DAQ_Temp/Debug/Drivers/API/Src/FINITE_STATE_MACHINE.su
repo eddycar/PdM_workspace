@@ -1,2 +1,4 @@
-../Drivers/API/Src/FINITE_STATE_MACHINE.c:34:6:SystemFSM_init	4	static
-../Drivers/API/Src/FINITE_STATE_MACHINE.c:39:6:SystemFSM_update	16	static
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:43:6:SystemFSM_init	8	static
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:52:6:SystemFSM_update	16	static
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:103:6:configPeripheral	8	static
+../Drivers/API/Src/FINITE_STATE_MACHINE.c:112:6:data_sending	8	static

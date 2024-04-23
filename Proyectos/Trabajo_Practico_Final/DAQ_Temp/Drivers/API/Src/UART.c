@@ -16,7 +16,7 @@ static void printUARTConfiguration(UART_HandleTypeDef UartHandle); // function T
 
 bool_t uartInit() {
 	bool_t isConnectionSuccesfull = true;
-
+    // 8N1 cofiguration
 	UartHandle3.Instance = USART3;
 	UartHandle3.Init.BaudRate = 9600;
 	UartHandle3.Init.WordLength = UART_WORDLENGTH_8B;
@@ -28,7 +28,6 @@ bool_t uartInit() {
 	if (HAL_UART_Init(&UartHandle3) != HAL_OK) {
 		write_error_flag(true);
 		isConnectionSuccesfull = false;
-
 	} else {
 		printUARTConfiguration(UartHandle3); // If the serial conection is successful, print uart configuration
 	}

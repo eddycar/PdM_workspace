@@ -1,6 +1,6 @@
 Drivers/Utilities/Src/error_handler.o: \
  ../Drivers/Utilities/Src/error_handler.c \
- C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/error_handler.h \
+ C:/Users/ASUS/Desktop/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/error_handler.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -28,8 +28,8 @@ Drivers/Utilities/Src/error_handler.o: \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/typedefs.h
-C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/error_handler.h:
+ C:/Users/ASUS/Desktop/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/typedefs.h
+C:/Users/ASUS/Desktop/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/error_handler.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:
@@ -57,4 +57,4 @@ C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Dr
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
-C:/Users/ASUS/Desktop/PdM_workspace/Proyectos/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/typedefs.h:
+C:/Users/ASUS/Desktop/Trabajo_Practico_Final/DAQ_Temp/Drivers/Utilities/Inc/typedefs.h:
